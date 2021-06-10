@@ -12,14 +12,26 @@ let broker = {
     password: 'ODB7aMesSDvAgsDT'
   }
 
-  let valor_test;
-  let valor_send = 0;
+
+
+  // VARIABLES
+  let mensaje_inicio;
+  let inicio = false;
+
+  let botonInicio;
+  let botonFinal;
 
   function setup(){
     createCanvas(300, 300);
     background(0);
 
-    setInterval(mandarValor, 1000);
+    botonInicio = createButton('Inicio');
+    botonInicio.position(0, 10);
+    botonInicio.mousePressed(sendMqttMessage);
+
+    botonFinal = createButton('Finalizar');
+    botonFinal.position(0, 10);
+    botonFinal.mousePressed(sendMqttMessage);
 
       ///////////////////
     // MQTT  
@@ -42,13 +54,19 @@ let broker = {
 
   function draw(){
 
+    if (inicio == false) {
+        botonInicio.style('display', 'block');
+        botonFinal.style('display', 'none');
+    }
+
+    if (inicio == true) {
+        botonInicio.style('display', 'none');
+        botonFinal.style('display', 'block');
+    }
+    
+
   }
 
-  function mandarValor() {
-    //console.log(valor_send);
-    sendMqttMessage();
-    valor_send++;
-  }
 
       // called when the client connects
 function onConnect() {
@@ -67,8 +85,8 @@ function onConnect() {
   // called when a message arrives
   function onMessageArrived(message) {
 
-    let mensaje = message.payloadString;
-    console.log(mensaje);
+    //let mensaje = message.payloadString;
+    //console.log(mensaje);
   
     //let llegaMensaje = split(message.payloadString, ',');
   
@@ -85,12 +103,13 @@ function onConnect() {
   // called when you want to send a message:
   function sendMqttMessage() {
   
-    
     // if the client is connected to the MQTT broker:
     if (client.isConnected()) {
-        valor_test = new Paho.MQTT.Message(String(valor_send));
-        valor_test.destinationName = "Transelectronicxs/valor_test";
-        client.send(valor_test);
+        mensaje_inicio = new Paho.MQTT.Message(String(inicio));
+        mensaje_inicio.destinationName = "Transelectronicxs/valor_test";
+        client.send(mensaje_inicio);
+
+        inicio = !inicio;
   
     }
     
