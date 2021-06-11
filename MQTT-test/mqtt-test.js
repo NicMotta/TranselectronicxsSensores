@@ -102,6 +102,9 @@ function onConnect() {
   
   // called when you want to send a message:
   function sendMqttMessage() {
+
+        inicio = !inicio;
+        console.log(inicio);
   
     // if the client is connected to the MQTT broker:
     if (client.isConnected()) {
@@ -109,7 +112,7 @@ function onConnect() {
         mensaje_inicio.destinationName = "Transelectronicxs/valor_test";
         client.send(mensaje_inicio);
 
-        inicio = !inicio;
+        
   
     }
     
