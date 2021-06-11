@@ -12,49 +12,46 @@ let broker = {
     password: 'ODB7aMesSDvAgsDT'
   }
 
-  let valor_test;
-  let valor_send = 0;
+  let valor_test, buttonStart, ButtonStop;
+  let valor_send = false;
 
   function setup(){
     createCanvas(300, 300);
     background(0);
+    buttonStart = createButton('Iniciar');
+    buttonStart.position(0, 0);
+    buttonStart.mousePressed(mandarValorTrue);
 
-    setInterval(mandarValor, 1000);
-
-      ///////////////////
-    // MQTT  
-    ///////////////////
-
+    ButtonStop = createButton('Stop');
+    ButtonStop.position(0, 0);
+    ButtonStop.mousePressed(mandarValorFalse);
     client = new Paho.MQTT.Client(broker.hostname, Number(broker.port), creds.clientID);
-    // set callback handlers for the client:
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
-    // connect to the MQTT broker:
-    client.connect(
-        {
-            onSuccess: onConnect,       // callback function for when you connect
-            userName: creds.userName,   // username
-            password: creds.password,   // password
-            useSSL: true                // use SSL
-        }
+    client.connect({
+        onSuccess: onConnect,       // callback function for when you connect
+        userName: creds.userName,   // username
+        password: creds.password,   // password
+        useSSL: true                // use SSL
+      }
     );
   }
 
-  function draw(){
+  function draw() {}
 
-  }
-
-  function mandarValor() {
-    //console.log(valor_send);
+  function mandarValorTrue() {
     sendMqttMessage();
-    valor_send++;
+    valor_send = true;
   }
 
-      // called when the client connects
-function onConnect() {
+  function mandarValorFalse() {
+    sendMqttMessage();
+    valor_send = false;
+  }
+
+  function onConnect() {
     console.log('client is connected');
-    client.subscribe("Transelectronicxs/valor_test");
-  
+    client.subscribe("BPM-promedio/Sara");
   }
   
   // called when the client loses its connection
@@ -66,17 +63,12 @@ function onConnect() {
   
   // called when a message arrives
   function onMessageArrived(message) {
-
     let mensaje = message.payloadString;
-    console.log(mensaje);
-  
+    console.log(mensaje, 'este es el mensaje');
     //let llegaMensaje = split(message.payloadString, ',');
-  
     //MQTTValorX = parseFloat(llegaMensaje[0]);
     //MQTTValorY = parseFloat(llegaMensaje[1]);
     //MQTTValorZ = parseFloat(llegaMensaje[2]);
-  
-  
     //console.log(MQTTx.length);
   
   }
@@ -84,14 +76,10 @@ function onConnect() {
   
   // called when you want to send a message:
   function sendMqttMessage() {
-  
-    
     // if the client is connected to the MQTT broker:
     if (client.isConnected()) {
-        valor_test = new Paho.MQTT.Message(String(valor_send));
-        valor_test.destinationName = "Transelectronicxs/valor_test";
-        client.send(valor_test);
-  
+      valor_test = new Paho.MQTT.Message(String(valor_send));
+      valor_test.destinationName = "Transelectronicxs/valor_test";
+      client.send(valor_test);
     }
-    
   }
