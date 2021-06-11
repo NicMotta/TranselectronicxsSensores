@@ -6,13 +6,13 @@
 MAX30105 particleSensor;
 
 EspMQTTClient client(
-  "MAX_LINE_DIANA",   // Nombre WIFI
-  "florecita",               // Contraseña WIFI
+  "MAX_LINE_DIANA",            // Nombre WIFI
+  "florecita",                 // Contraseña WIFI
   "data-nec.cloud.shiftr.io",  // MQTT Broker Server
   "data-nec",                  // Usuario
   "ODB7aMesSDvAgsDT",          // Contraseña / Token
-  "DATA-Sara",           // Nombre del dispositivo
-   1883                         // Puerto
+  "DATA-Sara",                 // Nombre del dispositivo
+   1883                        // Puerto
 );
 
 String mensaje = "false";
@@ -29,15 +29,15 @@ unsigned long time_now = 0;
 
 void setup() {
   Serial.begin(115200);
-//  Serial.println("Initializing...");
-//  if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) {
-//    Serial.println("MAX30105 was not found. Please check wiring/power. ");
-//    while (1);
-//  }
-//  Serial.println("Place your index finger on the sensor with steady pressure.");
-//  particleSensor.setup();
-//  particleSensor.setPulseAmplitudeRed(0x0A);
-//  particleSensor.setPulseAmplitudeGreen(0);
+  Serial.println("Initializing...");
+  if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) {
+    Serial.println("MAX30105 was not found. Please check wiring/power. ");
+    while (1);
+  }
+  Serial.println("Place your index finger on the sensor with steady pressure.");
+  particleSensor.setup();
+  particleSensor.setPulseAmplitudeRed(0x0A);
+  particleSensor.setPulseAmplitudeGreen(0);
 }
 
 void onConnectionEstablished() {
@@ -48,8 +48,7 @@ void onConnectionEstablished() {
 
 void loop() {
   client.loop();
-//  long irValue = particleSensor.getIR();
-  boolean irValue = true;
+  long irValue = particleSensor.getIR();
   if (checkForBeat(irValue) == true) {
     long delta = millis() - lastBeat;
     lastBeat = millis();
@@ -63,13 +62,13 @@ void loop() {
       beatAvg /= RATE_SIZE;
     }
   }
-//  Serial.print("IR=");
-//  Serial.print(irValue);
-//  Serial.print(", BPM=");
-//  Serial.print(beatsPerMinute);
-//  Serial.print(", Avg BPM=");
-//  Serial.print(beatAvg);
-//  if (irValue < 50000) Serial.print(" No finger?");
+  Serial.print("IR=");
+  Serial.print(irValue);
+  Serial.print(", BPM=");
+  Serial.print(beatsPerMinute);
+  Serial.print(", Avg BPM=");
+  Serial.print(beatAvg);
+  if (irValue < 50000) Serial.print(" No finger?");
   String PromedioBeat = String(beatAvg);
   Serial.println(mensaje);
   if(millis() >= time_now + period && mensaje == "true"){
