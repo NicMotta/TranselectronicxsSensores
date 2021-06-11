@@ -12,19 +12,23 @@ let broker = {
     password: 'ODB7aMesSDvAgsDT'
   }
 
-  let valor_test, buttonStart, ButtonStop;
-  let valor_send = false;
+
+
+  // VARIABLES
+  let mensaje_inicio;
+  let inicio = false;
+
+  let botonInicio;
+  let botonFinal;
 
   function setup(){
     createCanvas(300, 300);
     background(0);
-    buttonStart = createButton('Iniciar');
-    buttonStart.position(0, 0);
-    buttonStart.mousePressed(mandarValorTrue);
 
-    ButtonStop = createButton('Stop');
-    ButtonStop.position(0, 0);
-    ButtonStop.mousePressed(mandarValorFalse);
+    botonInicio = createButton('Inicio');
+    botonInicio.position(0, 20);
+    botonInicio.mousePressed(sendMqttMessage);
+
     client = new Paho.MQTT.Client(broker.hostname, Number(broker.port), creds.clientID);
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
@@ -39,16 +43,8 @@ let broker = {
 
   function draw() {}
 
-  function mandarValorTrue() {
-    sendMqttMessage();
-    valor_send = true;
-  }
 
-  function mandarValorFalse() {
-    sendMqttMessage();
-    valor_send = false;
-  }
-
+      // called when the client connects
   function onConnect() {
     console.log('client is connected');
     client.subscribe("BPM-promedio/Sara");
@@ -76,10 +72,21 @@ let broker = {
   
   // called when you want to send a message:
   function sendMqttMessage() {
+
+    inicio = !inicio;
+    console.log(inicio);
+    
+    if (inicio == false) {
+      botonInicio.html('Inicio');
+    }
+
+    if (inicio == true) {
+      botonInicio.html('Final');
+    }
     // if the client is connected to the MQTT broker:
     if (client.isConnected()) {
-      valor_test = new Paho.MQTT.Message(String(valor_send));
-      valor_test.destinationName = "Transelectronicxs/valor_test";
-      client.send(valor_test);
+      mensaje_inicio = new Paho.MQTT.Message(String(inicio));
+      mensaje_inicio.destinationName = "Transelectronicxs/valor_test";
+      client.send(mensaje_inicio);
     }
   }
