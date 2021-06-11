@@ -25,7 +25,7 @@ let broker = {
     createCanvas(300, 300);
     background(0);
 
-    botonInicio = createButton('Inicio');
+    botonInicio = createButton('Iniciar');
     botonInicio.position(0, 20);
     botonInicio.mousePressed(sendMqttMessage);
 
@@ -73,15 +73,13 @@ let broker = {
   // called when you want to send a message:
   function sendMqttMessage() {
 
-    inicio = !inicio;
-    console.log(inicio);
-    
+    inicio = !inicio;    
     if (inicio == false) {
-      botonInicio.html('Inicio');
+      botonInicio.html('Iniciar');
     }
 
     if (inicio == true) {
-      botonInicio.html('Final');
+      botonInicio.html('Finalizar');
     }
     // if the client is connected to the MQTT broker:
     if (client.isConnected()) {
