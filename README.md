@@ -30,6 +30,8 @@ El motor vibrador indica la sincronicidad de los BPM, y el cuerpo se adapta a es
 Diseños de construccion:
 
 1 - Diseño de muñequera impresa en 3D con ESP y bateria + sensor en el dedo.
+![WhatsApp Image 2021-06-14 at 8 40 47 PM](https://user-images.githubusercontent.com/22927977/122130117-c8d83f80-cdfc-11eb-97e1-8c18a305337e.jpeg)
+
 2 - Diseño mejorado impreso con un algoritmo que optimiza el uso del material para disminur la cantidad pero con la misma resistencia.
 3 - Diseño de casco o vincha para evitar tener cosas en las manos el sensor se ubicaría en la cien.
 4 - Diseño de cuello para tener el sensor en la carótida, mayor flujo de sangre, mejor medición.
