@@ -33,9 +33,18 @@ Diseños de construccion:
 ![WhatsApp Image 2021-06-14 at 8 40 47 PM](https://user-images.githubusercontent.com/22927977/122130117-c8d83f80-cdfc-11eb-97e1-8c18a305337e.jpeg)
 
 2 - Diseño mejorado impreso con un algoritmo que optimiza el uso del material para disminur la cantidad pero con la misma resistencia.
+![WhatsApp Image 2021-06-14 at 8 44 33 PM](https://user-images.githubusercontent.com/22927977/122130193-e73e3b00-cdfc-11eb-83ef-41c83f3c7b24.jpeg)
+
 3 - Diseño de casco o vincha para evitar tener cosas en las manos el sensor se ubicaría en la cien.
+
 4 - Diseño de cuello para tener el sensor en la carótida, mayor flujo de sangre, mejor medición.
+
 5 - Diseño de tobillera, mientras se está en clase no molesta.
+
 6 - Diseño de antebrazo, con el sensor sobre la vena. Evita molestias de la mano y es más cómodo de usar.
+
 7 - Utilizar el celular como disparador de vibraciones y no depender del motor vibrador de arduino
+
 8 - Diseño de pechera. Como los jugadores de futbol.
+![WhatsApp Image 2021-06-14 at 9 08 54 PM](https://user-images.githubusercontent.com/22927977/122130243-f4f3c080-cdfc-11eb-91c0-84d4f2ed5f87.jpeg)
+
