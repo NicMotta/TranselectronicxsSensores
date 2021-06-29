@@ -12,7 +12,7 @@ EspMQTTClient client(
   "data-nec",                  // Usuario
   "ODB7aMesSDvAgsDT",          // Contraseña / Token
   "DATA-Sara",                 // Nombre del dispositivo
-   1883                        // Puerto
+  1883                        // Puerto
 );
 
 String mensaje = "false";
@@ -26,6 +26,8 @@ int beatAvg;
 
 int period = 1000;
 unsigned long time_now = 0;
+
+String randNumberNic, randNumberAndres;
 
 void setup() {
   Serial.begin(115200);
@@ -41,7 +43,7 @@ void setup() {
 }
 
 void onConnectionEstablished() {
-  client.subscribe("Transelectronicxs/valor_test", [](const String& topic, const String& message) {
+  client.subscribe("Transelectronicxs/valor_test", [](const String & topic, const String & message) {
     mensaje = message;
   });
 }
@@ -70,9 +72,9 @@ void loop() {
   Serial.print(beatAvg);
   if (irValue < 50000) Serial.print(" No finger?");
   String PromedioBeat = String(beatAvg);
-  Serial.println(mensaje);
-  if(millis() >= time_now + period && mensaje == "true"){
+
+  if (millis() >= time_now + period && mensaje == "true") {
     time_now += period;
-    client.publish("BPM-promedio/Sara", PromedioBeat); 
+    client.publish("BPM-promedio/Nic", PromedioBeat);
   }
 }
